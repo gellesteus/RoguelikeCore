@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
+	<classpathentry sourcepath="/home/mark/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.3.1/58319f183d9088a80c2f2ba9009f5aaa2ce08714/gdx-1.3.1-sources.jar" kind="lib" path="/home/mark/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.3.1/18995f8b7b19118975722370818023c76a86fdf4/gdx-1.3.1.jar" exported="true"/>
+	<classpathentry sourcepath="/home/mark/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.3.1/c13ab660a3e654b764df8dad6fd633a56bb44977/gdx-box2d-1.3.1-sources.jar" kind="lib" path="/home/mark/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.3.1/868425fb2070db88a2949a25b88e0a737a372d4b/gdx-box2d-1.3.1.jar" exported="true"/>
+	<classpathentry sourcepath="/home/mark/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.2/50b3097b9588b328c53bc2e21fd115e89fc06265/box2dlights-1.2-sources.jar" kind="lib" path="/home/mark/.gradle/caches/modules-2/files-2.1/com.badlogicgames.box2dlights/box2dlights/1.2/8b3baf8bd6d5fdf7052d9798977133f46a9e7a05/box2dlights-1.2.jar" exported="true"/>
+</classpath>
