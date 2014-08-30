@@ -20,8 +20,8 @@ public class NotCondition extends Condition {
 	 * @see com.gellesteus.roguelike.entity.condition.Condition#evalue(com.gellesteus.roguelike.entity.Character)
 	 */
 	@Override
-	public boolean evalue(Character character) {
-		return !condition.evalue(character);
+	public boolean evaluate(Character character) {
+		return !condition.evaluate(character);
 	}
 
 }

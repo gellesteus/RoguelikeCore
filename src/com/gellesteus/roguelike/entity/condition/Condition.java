@@ -6,5 +6,5 @@ public abstract class Condition {
 	/*Evaluates the condition and returns it.
 	 * 
 	 */
-	public abstract boolean evalue(Character character);
+	public abstract boolean evaluate(Character character);
 }

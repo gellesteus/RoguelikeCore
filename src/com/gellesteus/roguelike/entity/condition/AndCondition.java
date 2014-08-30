@@ -21,8 +21,8 @@ public class AndCondition extends Condition {
 	 * @see com.gellesteus.roguelike.entity.condition.Condition#evalue(com.gellesteus.roguelike.entity.Character)
 	 */
 	@Override
-	public boolean evalue(Character character) {
-		return condition1.evalue(character)&condition2.evalue(character);
+	public boolean evaluate(Character character) {
+		return condition1.evaluate(character)&condition2.evaluate(character);
 	}
 
 }

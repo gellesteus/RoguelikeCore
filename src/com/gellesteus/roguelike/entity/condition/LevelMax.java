@@ -15,7 +15,7 @@ public class LevelMax extends Condition {
 	 * @see com.gellesteus.roguelike.entity.condition.Condition#evalue(com.gellesteus.roguelike.entity.Character)
 	 */
 	@Override
-	public boolean evalue(Character character) {
+	public boolean evaluate(Character character) {
 		// TODO Auto-generated method stub
 		return false;
 	}
