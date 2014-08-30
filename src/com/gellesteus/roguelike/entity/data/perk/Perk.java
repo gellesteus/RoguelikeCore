@@ -12,4 +12,8 @@ public class Perk {
 	public boolean isEligible(Character character){
 		return requirements.evaluate(character);
 	}
+	
+	public Passive getEffect(){
+		return effect;
+	}
 }
