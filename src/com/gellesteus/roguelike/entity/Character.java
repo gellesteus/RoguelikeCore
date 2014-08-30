@@ -33,9 +33,16 @@ public class Character implements Update {
 		return perks.contains(perk);
 	}
 	
+	public void addPerk(Perk perk){
+		perks.add(perk);
+		addAbility(perk.getEffect());
+	}
+	
 	public boolean hasAbility(Ability ability){
 		return abilities.contains(ability);
 	}
+	
+
 	
 	public Race getRace(){
 		return race;
@@ -91,11 +98,25 @@ public class Character implements Update {
 		}
 	}
 	
-	public void removeAbility(Ability ab){
-		
+	public void removePerk(Perk perk){
+		if(perks.contains(perk)){
+			removeAbility(perk.getEffect());
+			perks.remove(perk);
+		}
+	}
+	
+	public void removeAbility(Ability ability){
+		if(hasAbility(ability)){
+			abilities.get(abilities.indexOf(ability)).notify(Trigger.ON_REMOVE, this);
+			abilities.remove(ability);
+		}
 	}
 	
 	public void applyEffect(Effect effect){
+		
+	}
+	
+	public void removeEffect(Effect effect){
 		
 	}
 	

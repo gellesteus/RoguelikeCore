@@ -28,7 +28,8 @@ public class Passive extends Ability {
 		ON_DEATH,
 		ON_CHARGE,
 		ON_TELEPORT,
-		ON_UPDATE;
+		ON_UPDATE,
+		ON_REMOVE;
 	}
 	
 	private class EventHandler{
