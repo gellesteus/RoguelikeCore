@@ -35,7 +35,7 @@ public abstract class Ability implements Update,Cloneable {
 	
 	public boolean canCast(Character character){
 		if(!(this instanceof Passive)){
-			return castCondition.evalue(character);
+			return castCondition.evaluate(character);
 		}
 		return false;
 	}
