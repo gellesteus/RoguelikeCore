@@ -21,6 +21,57 @@ public class Cell {
 		}//Discard it if else. TODO log exception
 	}
 	
+	private Cell(int x, int y,Celltype cType){
+		this.x=x;
+		this.y=y;
+		this.celltype=cType;
+	}
+	
+	public Cell(Cell toCopy){
+		//Assumes that this is a reference to the top right cell.
+		int x=0,y=0;
+		Cell currentY = toCopy;
+		Cell currentX = toCopy;
+		boolean init = false;
+		while(currentY.getDown()!=null){
+			while(currentX.getLeft()!=null){
+				if(!init){
+					this.x=0;
+					this.y=0;
+					this.celltype=currentX.celltype;
+				}else{
+					//link to an existing cell
+					Cell current = new Cell(x,y,currentX.celltype);
+					Cell currentPos=this;
+					for(int i = 0;i<y;i++){
+						currentPos=currentPos.down;	
+					}
+					for(int i = 0;i<x-1;i++){
+						currentPos=currentPos.left;
+					}
+					current.linkCells(currentPos);
+					
+					if(y>0){
+						currentPos=this;
+						
+						for(int i = 0;i<y-1;i++){
+							currentPos=currentPos.down;	
+						}
+						for(int i = 0;i<x;i++){
+							currentPos=currentPos.left;
+						}
+						current.linkCells(currentPos);
+					}
+				}
+				x++;
+			}
+			currentY=currentY.down;
+			currentX=currentY;
+			y++;
+		}
+		
+	}
+	
 	public int getX(){
 		return x;
 	}
