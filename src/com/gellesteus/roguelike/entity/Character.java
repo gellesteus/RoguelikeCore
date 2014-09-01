@@ -1,6 +1,8 @@
 package com.gellesteus.roguelike.entity;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
 
 import com.gellesteus.roguelike.entity.data.ability.Ability;
 import com.gellesteus.roguelike.entity.data.ability.AbilityFactory;
@@ -13,6 +15,11 @@ import com.gellesteus.roguelike.entity.data.resource.Resource;
 import com.gellesteus.roguelike.entity.data.characterclass.Class;
 import com.gellesteus.roguelike.entity.data.effect.Effect;
 import com.gellesteus.roguelike.entity.data.effect.EffectFactory;
+import com.gellesteus.roguelike.entity.data.item.Item;
+import com.gellesteus.roguelike.entity.data.item.weapon.WeaponBase;
+import com.gellesteus.roguelike.entity.data.item.armor.ArmorBase;
+import com.gellesteus.roguelike.entity.data.item.armor.Slot;
+import com.gellesteus.roguelike.entity.data.item.consumable.Consumable;
 public class Character implements Update {
 	private String name;
 	private Race race;
@@ -22,6 +29,9 @@ public class Character implements Update {
 	private ArrayList<Resource> resources = new ArrayList<Resource>();
 	private ArrayList<Perk> perks = new ArrayList<Perk>();
 	private ArrayList<Effect> effects = new ArrayList<Effect>();
+	private HashMap<Item,Integer> inventory = new HashMap<Item,Integer>();
+	private WeaponBase equippedWeapon;
+	private EnumMap<Slot,ArmorBase> equippedArmor = new EnumMap<Slot,ArmorBase>(Slot.class);
 	private Resource health = new Resource(Resource.HEALTH,10);
 	private int level;
 	private Class cClass;
@@ -43,7 +53,60 @@ public class Character implements Update {
 		return abilities.contains(ability);
 	}
 	
-
+	public void addItem(Item item, int amount){
+		if(inventory.containsKey(item)){
+			inventory.put(item,inventory.get(item)+amount);
+		}else{
+			inventory.put(item,amount);
+		}
+	}
+	
+	public void removeItem(Item item, int amount){
+		if(inventory.containsKey(item)){
+			int after = inventory.get(item)-amount;
+			if(after>0){
+				inventory.put(item,inventory.get(item)-amount);
+			}else{
+				inventory.remove(item);
+			}
+		}
+	}
+	
+	public int getItemCount(Item item){
+		if(inventory.containsKey(item)){
+			return inventory.get(item);
+		}
+		return 0;
+	}
+	
+	public void equip(WeaponBase weapon){
+		if(getItemCount(weapon)>0){
+			if(equippedWeapon != null){
+				equippedWeapon.unequip(this);
+				addItem(equippedWeapon,1);
+			}
+			equippedWeapon=weapon;
+			weapon.equip(this);
+			removeItem(equippedWeapon,1);
+		}
+	}
+	
+	public void equip(ArmorBase armor){
+		if(getItemCount(armor)>0){
+			if(equippedArmor.get(armor.getSlot())!=null){
+				ArmorBase toUnequip = equippedArmor.get(armor.getSlot());
+				toUnequip.onUnequip(this);
+				addItem(toUnequip,1);
+			}
+			removeItem(armor,1);
+			equippedArmor.put(armor.getSlot(), armor);
+			armor.onEquip(this);
+		}
+	}
+	
+	public void equip(Consumable consumable){
+		consumable.use(this);
+	}
 	
 	public Race getRace(){
 		return race;
@@ -58,10 +121,13 @@ public class Character implements Update {
 	}
 	
 	public boolean castAbility(Ability ab,int x,int y){
-		if(abilities.contains(ab)){
-			if(ab.canCast(this)){
-				ab.cast(x, y);
-				return true;
+		if(gcd<=0){
+			if(abilities.contains(ab)){
+				if(ab.canCast(this)){
+					ab.cast(x, y);
+					gcd=maxGcd;
+					return true;
+				}
 			}
 		}
 		return false;
@@ -207,6 +273,12 @@ public class Character implements Update {
 		}
 		for(Effect i:effects){
 			i.update(msPassed);
+		}
+		if(gcd>0){
+			gcd-=msPassed;
+		}
+		if(gcd<0){
+			gcd=0;
 		}
 		health.update(msPassed);
 	}

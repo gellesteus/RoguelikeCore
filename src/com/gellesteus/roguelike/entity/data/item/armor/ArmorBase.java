@@ -12,4 +12,5 @@ import com.gellesteus.roguelike.entity.Character;
 public abstract class ArmorBase extends Item{
 	public abstract void onEquip(Character equipper);
 	public abstract void onUnequip(Character equipper);
+	public abstract Slot getSlot();
 }

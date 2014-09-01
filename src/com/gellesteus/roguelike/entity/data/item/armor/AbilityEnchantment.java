@@ -25,5 +25,10 @@ public class AbilityEnchantment extends ArmorBase {
 		equipper.removeAbility(ab);
 		armor.onUnequip(equipper);
 	}
+
+	@Override
+	public Slot getSlot() {
+		return armor.getSlot();
+	}
 	
 }

@@ -9,7 +9,6 @@ import com.gellesteus.roguelike.entity.Character;
  *
  */
 public class Armor extends ArmorBase {
-	private String name;
 	private Slot slot;
 	
 	public void onEquip(Character equipper){
@@ -19,4 +18,6 @@ public class Armor extends ArmorBase {
 	public void onUnequip(Character equipper){
 		
 	}
+	
+	public Slot getSlot(){return slot;}
 }
