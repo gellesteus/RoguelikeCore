@@ -6,7 +6,8 @@ public class DamageInstant extends Effect {
 	private int damage;
 	private DamageType[] damagetypes;
 	
-	public DamageInstant(int damage, DamageType...damageTypes){
+	public DamageInstant(int damage,DamageType...damageTypes){
+		super(0);
 		this.damage=damage;
 		this.damagetypes=damageTypes;
 	}
@@ -23,5 +24,10 @@ public class DamageInstant extends Effect {
 	}
 	@Override
 	public void onRemove() {}
+
+	@Override
+	public Object clone() {
+		return new DamageInstant(this.damage,this.damagetypes);
+	}
 
 }

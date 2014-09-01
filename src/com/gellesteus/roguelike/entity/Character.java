@@ -12,6 +12,7 @@ import com.gellesteus.roguelike.entity.data.race.Race;
 import com.gellesteus.roguelike.entity.data.resource.Resource;
 import com.gellesteus.roguelike.entity.data.characterclass.Class;
 import com.gellesteus.roguelike.entity.data.effect.Effect;
+import com.gellesteus.roguelike.entity.data.effect.EffectFactory;
 public class Character implements Update {
 	private String name;
 	private Race race;
@@ -90,6 +91,14 @@ public class Character implements Update {
 		}
 	}
 	
+	public void increaseMaxResource(Resource attribute,int amount){
+		if(resources.contains(attribute)){
+			resources.get(attributes.indexOf(attribute)).modMax(amount);
+		}else{
+			resources.add(new Resource(attribute, amount));
+		}
+	}
+	
 	public void setAV(Resource attribute,int amount){
 		if(resources.contains(attribute)){
 			resources.get(attributes.indexOf(attribute)).setCurrent(amount);
@@ -113,11 +122,18 @@ public class Character implements Update {
 	}
 	
 	public void applyEffect(Effect effect){
-		
+		EffectFactory.CreateEffect(effect, this, this);
+	}
+	
+	public void addEffect(Effect effect){
+		//Use apply effect or you will get nullpointerexceptions.
+		effects.add(effect);
 	}
 	
 	public void removeEffect(Effect effect){
-		
+		if(effects.contains(effect)){
+			effects.remove(effect);
+		}
 	}
 	
 	public int heal(int amount){

@@ -6,7 +6,8 @@ public class DamageOverTime extends Effect {
 	private int dps;
 	private DamageType[] damagetypes;
 	
-	public DamageOverTime(int dps, DamageType...damageTypes){
+	public DamageOverTime(int dps,int duration,DamageType...damageTypes){
+		super(duration);
 		this.dps=dps;
 		this.damagetypes=damageTypes;
 	}
@@ -21,5 +22,10 @@ public class DamageOverTime extends Effect {
 	public void onApply() {}
 	@Override
 	public void onRemove() {}
+
+	@Override
+	public Object clone() {
+		return new DamageOverTime(this.dps,this.duration,this.damagetypes);
+	}
 
 }

@@ -73,7 +73,7 @@ public class ProceduralSceneGenerator {
 			}
 		}
 		//Connect rooms
-		
+		level.connectCrawl();
 		return level;
 		
 	}

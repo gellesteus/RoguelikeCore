@@ -35,7 +35,6 @@ public class Passive extends Ability {
 	private class EventHandler{
 		Trigger trigger;
 		Effect effect;
-		int duration;
 	}
 	
 	public Passive(){
@@ -47,7 +46,7 @@ public class Passive extends Ability {
 	public void notify(Trigger event,Character notifier){
 		for(EventHandler i:effects){
 			if(i.trigger==event){
-				//TODO notifier.addEffect(effect);
+				owner.applyEffect(i.effect);
 			}
 		}
 	}
