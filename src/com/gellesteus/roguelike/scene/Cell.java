@@ -21,7 +21,7 @@ public class Cell {
 		}//Discard it if else. TODO log exception
 	}
 	
-	private Cell(int x, int y,Celltype cType){
+	protected Cell(int x, int y,Celltype cType){
 		this.x=x;
 		this.y=y;
 		this.celltype=cType;
@@ -96,6 +96,10 @@ public class Cell {
 		return down;
 	}
 	
+	protected Celltype getCelltype(){
+		return celltype;
+	}
+	
 	public void link(Level level){
 		if(!level.isFinal()){
 			linkCells(level.cellAt(x, y+1));
@@ -121,5 +125,9 @@ public class Cell {
 				cell.left=this;
 			}
 		}
+	}
+
+	public void setCelltype(Celltype floor) {
+		this.celltype=Celltype.FLOOR;
 	}
 }
