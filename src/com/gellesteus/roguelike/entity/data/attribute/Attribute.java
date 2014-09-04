@@ -19,6 +19,11 @@ public class Attribute implements Update{
 	public static final Attribute EARTH_RESIST = new Attribute("Earth Resistance");
 	public static final Attribute WATER_RESIST = new Attribute("Water Resistance");
 	public static final Attribute POISON_RESIST = new Attribute("Poison Resistance");
+	public static final Attribute PSIONIC_RESIST = new Attribute("Psionic Resistance");
+	public static final Attribute SHOCK_RESIST = new Attribute("Shock Resistance");
+	public static final Attribute POSITIVE_RESISTANCE = new Attribute("Positive Energy Resistance");
+	public static final Attribute NEGATIVE_RESISTANCE = new Attribute("Negative Energy Resistance");
+	public static final Attribute TRUE_RESISTANCE = new Attribute("This should always be 0");
 	
 	public static final Attribute ATTACK_POWER = new Attribute("Attack Power");
 	public static final Attribute SPELL_POWER = new Attribute("Spell Power");

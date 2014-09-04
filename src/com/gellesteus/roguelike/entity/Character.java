@@ -21,6 +21,8 @@ import com.gellesteus.roguelike.entity.data.item.armor.ArmorBase;
 import com.gellesteus.roguelike.entity.data.item.armor.Slot;
 import com.gellesteus.roguelike.entity.data.item.consumable.Consumable;
 public class Character implements Update {
+	private static final int RESIST_HALF_POINT = 100;
+	
 	private String name;
 	private Race race;
 	private boolean isMale;
@@ -206,7 +208,15 @@ public class Character implements Update {
 		return amount;
 	}
 	
+	public int getAttribute(Attribute attribute){
+		return 0;
+	}
+	
 	public int damage(int amount, DamageType...damageTypes){
+		for(DamageType i:damageTypes){
+			amount *= getAttribute(i.getResistanceAttr())/(getAttribute(i.getResistanceAttr())+RESIST_HALF_POINT);
+		}
+		health.modCurrent(-amount);
 		return amount;
 		//TODO: method stub
 	}
