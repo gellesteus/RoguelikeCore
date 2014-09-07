@@ -7,7 +7,7 @@ package com.gellesteus.roguelike.scene;
  * @author mark
  *
  */
-public enum Celltype {
+public enum CellType {
 	FLOOR(1),
 	WALL(20),
 	WALL_EXIT(4),	//Primarily used for room templates to describe places that you would like the room to exit
@@ -20,7 +20,7 @@ public enum Celltype {
 	 * The costs are set up to favour using existing paths to creating new ones
 	 * and to use predefined exit points if at all possible.
 	 */
-	private Celltype(int cost){
+	private CellType(int cost){
 		this.cost=cost;
 	}
 	

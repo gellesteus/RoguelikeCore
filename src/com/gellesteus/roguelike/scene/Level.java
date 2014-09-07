@@ -1,212 +1,149 @@
-/**
- * 
- */
 package com.gellesteus.roguelike.scene;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 
-/**
- * @author mark
- *
- */
 public class Level {
-	private class Node implements Comparator<Node>,Comparable<Node>{
-		Cell cell;
-		Node parent;
-		int g,h;
-		
-		Node(Cell cell, Node parent,Cell to){
-			this.cell=cell;
-			this.parent=parent;
-			this.g=parent.g+cell.getCelltype().getCost();
-			this.h=Math.abs(cell.getX()-to.getX())+Math.abs(cell.getY()-to.getY())*100;
+	private static final int MAX_ROOM_SIZE=15,MIN_ROOM_SIZE=10;
+	private static final int ROOMS_TO_CREATE=20;
+	private static final int UP =0,DOWN=1,LEFT=2,RIGHT=3;
+
+	
+	private Node[][] graph;
+
+	
+	private static class NodeComp implements Comparator<Node>{
+
+		@Override
+		public int compare(Node o1, Node o2) {
+			return o1.getG()+o1.getH()-o2.getG()+o2.getH();
 		}
 		
-		Node(Cell cell, Cell to){
-			this.cell=cell;
-			this.g=0;
-			this.h=Math.abs(cell.getX()-to.getX())+Math.abs(cell.getY()-to.getY())*100;
-		}
-		
-		public boolean equals(Object obj){
-			if(obj!=null){
-				if(obj.getClass()==this.getClass()){
-					return ((Node)obj).cell.equals(cell);
-				}else if(obj instanceof Cell){
-					return ((Cell)obj).equals(this.cell);
+	}
+	
+	private static final NodeComp comp = new NodeComp();
+	
+	private void constructGraph(int width, int height){
+		graph=new Node[width][height];
+		for(int x=0;x<width;x++){
+			for(int y=0;y<height;y++){
+				Node newNode = new Node(x,y,CellType.WALL);
+				graph[x][y]=newNode;
+				if(x>0){
+					newNode.addNeighbour(graph[x-1][y], LEFT);
 				}
-			}
-			return false;
-		}
-
-		@Override
-		public int compare(Node arg0, Node arg1) {
-			return arg0.g+arg0.h-arg1.g+arg1.h;
-		}
-
-		@Override
-		public int compareTo(Node arg0) {
-			return compare(this,arg0);
-		}
-	}
-	
-	private Cell origin = new Cell(this,0,0,Celltype.FLOOR);
-	private boolean finalized = false;
-	
-	protected Cell getOrigin(){
-		return origin;
-	}
-	
-	protected void addCell(Cell cell){
-		
-	}
-	
-	protected void connectCrawl(){
-		/* Connects the cells by using A* pathfinding to go from center to center.
-		 * any wall squares it passes over become non-wall squares
-		 * Movement costs are defined in Celltype.java
-		 */
-		
-		ArrayList<Cell> centers = new ArrayList<Cell>();
-		//Find centers
- 		
-		//travel center to center, taking care not to backtrack
-		for(Cell i:centers){
-			for(Cell j:centers){
-				if(i!=j){
-					connectHallways(i,j);
+				if(y>0){
+					newNode.addNeighbour(graph[x][y-1], DOWN);
 				}
 			}
 		}
 	}
 	
-	private void connectHallways(Cell from,Cell to){
-		//Pathfind and clear passed cells.
+	private ArrayList<int[]> createRooms(int width,int height,int seed){
+		ArrayList<int[]> centers = new ArrayList<int[]>();
+		ArrayList<Room> created = new ArrayList<Room>();
+		Random random=new Random(seed);
+		for(int i =0;i<ROOMS_TO_CREATE;i++){
+			int xSize = random.nextInt(MAX_ROOM_SIZE-MIN_ROOM_SIZE)+MIN_ROOM_SIZE;
+			int ySize = random.nextInt(MAX_ROOM_SIZE-MIN_ROOM_SIZE)+MIN_ROOM_SIZE;
+			int x = random.nextInt(width-xSize);
+			int y = random.nextInt(height-ySize);
+			created.add(new Room(x,y,xSize,ySize));
+		}
+		ArrayList<Room> toPlace = new ArrayList<Room>();
+		for(Room i:created){
+			boolean collides = false;
+			for(Room j:toPlace){
+				if(i.collides(j)){
+					collides=true;
+					break;
+				}
+			}
+			if(!collides){
+				toPlace.add(i);
+			}
+		}
+		
+		for(Room i:toPlace){
+			centers.add(new int[]{i.x+(i.width/2),i.y+(i.height/2)});
+			for(int x=i.x;x<i.x+i.width;x++){
+				for(int y=i.y;y<i.y+i.height;y++){
+					graph[x][y].setType(CellType.FLOOR);
+				}
+			}
+		}
+		
+		return centers;
+	}
+	
+	private void crawl(ArrayList<int[]> centers){
+		for(int i = 0;i<centers.size();i++){
+			for(int j = i+1;j<centers.size();j++){
+				connectNode(graph[centers.get(i)[0]][centers.get(i)[1]],graph[centers.get(j)[0]][centers.get(j)[1]]);
+			}
+		}
+	}
+	
+	private void connectNode(Node node1,Node node2){
 		ArrayList<Node> open = new ArrayList<Node>();
 		ArrayList<Node> closed = new ArrayList<Node>();
-		Node current = new Node(from,to);
-		open.add(new Node(from,to));
-		while(current.cell != to){
-			//check all neighbours to find lowest f value
-			//Then continue from that point until we reach end
-			if(!closed.contains(current.cell.getDown())){
-				if(open.contains(current.cell.getDown())){
-					Node check = open.get(open.indexOf(current.cell.getDown()));
-					Node newN = new Node(current.cell.getDown(),current,to);
-					if(newN.g<check.g){
-						open.remove(check);
-						open.add(newN);
+		Node current = node1;
+		current.setParent(null);
+		current.setG(0);
+		current.calculateH(node2);
+		System.out.println("Connecting " + node1.getX()+" "+node1.getY()+" to " + node2.getX()+" "+node2.getY());
+		while(current != node2){
+			for(Node i:current.getNeighbours()){
+				if(i!=null){
+					if(!closed.contains(i)){
+						if(open.contains(i)){
+							int g = i.getG();
+							i.calculateG(current);
+							if(i.getG()>g){
+								i.setG(g);
+							}else{
+								i.setParent(current);
+							}
+						}else{
+							i.calculateG(current);
+							i.calculateH(node2);	
+							i.setParent(current);
+							open.add(i);
+							
+						}
 					}
-				}else{
-					open.add(new Node(current.cell.getDown(),current,to));
 				}
 			}
-			if(!closed.contains(current.cell.getRight())){
-				if(open.contains(current.cell.getRight())){
-					Node check = open.get(open.indexOf(current.cell.getRight()));
-					Node newN = new Node(current.cell.getRight(),current,to);
-					if(newN.g<check.g){
-						open.remove(check);
-						open.add(newN);
-					}
-				}else{
-					open.add(new Node(current.cell.getRight(),current,to));
+			
+			if(open.size()==0)return;
+			
+			Collections.sort(open,new Comparator<Node>(){
+
+				@Override
+				public int compare(Node arg0, Node arg1) {
+					return (arg0.getG()+arg0.getH())-(arg1.getG()+arg1.getH());
 				}
-			}
-			if(!closed.contains(current.cell.getLeft())){
-				if(open.contains(current.cell.getLeft())){
-					Node check = open.get(open.indexOf(current.cell.getLeft()));
-					Node newN = new Node(current.cell.getLeft(),current,to);
-					if(newN.g<check.g){
-						open.remove(check);
-						open.add(newN);
-					}
-				}else{
-					open.add(new Node(current.cell.getLeft(),current,to));
-				}
-			}
-			if(!closed.contains(current.cell.getUp())){
-				if(open.contains(current.cell.getUp())){
-					Node check = open.get(open.indexOf(current.cell.getUp()));
-					Node newN = new Node(current.cell.getUp(),current,to);
-					if(newN.g<check.g){
-						open.remove(check);
-						open.add(newN);
-					}
-				}else{
-					open.add(new Node(current.cell.getUp(),current,to));
-				}
-			}
-			open.remove(current);
+			});
 			closed.add(current);
-			if(open.size()==0) return; //Path cannot be found
-			Collections.sort(open);
-			//Select lowest f value from all squares on open list.
-			current=open.get(0);
+			current = open.get(0);
+			open.remove(0);
 		}
-		while(current.cell != from){
-			//Go back through the path carving it out.
-			current.cell.setCelltype(Celltype.FLOOR);
-			current=current.parent;
+		while(current.getParent()!=null){
+			current.setType(CellType.FLOOR);
+			current=current.getParent();
 		}
 	}
 	
-	protected Cell cellAt(int x, int y){
-		if(!isFinal()){
-			Cell current = origin;
-			while(current.getX() != x){
-				if(current.getX()>x){
-					if(current.getRight()!= null){
-						current=current.getRight();
-					}else{
-						current = new Cell(this,current.getX()+1,current.getY(),Celltype.WALL);
-					}
-				}else{
-					if(current.getLeft()!= null){
-						current=current.getLeft();
-					}else{
-						current = new Cell(this,current.getX()-1,current.getY(),Celltype.WALL);
-					}
-				}
-			}
-			
-			while(current.getY() != y){
-				if(current.getY()>y){
-					if(current.getUp()!= null){
-						current=current.getUp();
-					}else{
-						current = new Cell(this,current.getX(),current.getY()+1,Celltype.WALL);
-					}
-				}else{
-					if(current.getDown()!= null){
-						current=current.getDown();
-					}else{
-						current = new Cell(this,current.getX(),current.getY()-1,Celltype.WALL);
-					}
-				}
-			}
-			
-			return current;
-		}else{
-			return null;
-			//TODO Log exception
-		}
-		
-	}
-	public boolean isFinal(){
-		return finalized;
+	public Level(int width,int height){
+		Random random = new Random();
+		constructGraph(width,height);
+		crawl(createRooms(width,height,random.nextInt(32700)));
 	}
 	
-	public void Cull(){
-		//After cell is culled, prevent it from being further editted.
-		//New statics, characters and items can be created and placed,
-		//but the underlying layout cannot be changed
-		//Removes all unaccessible squares and frees up their memory for garbage collection
-		if(!isFinal()){
-			
-			finalized = true;
-		}
+	public Level(int width,int height, int seed){
+		constructGraph(width,height);
+		crawl(createRooms(width,height,seed));
 	}
 }

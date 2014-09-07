@@ -12,7 +12,8 @@ import com.gellesteus.roguelike.scene.Level;
 public class Camera {
 	private static Camera camera = new Camera();
 	private int x,y;
-	
+	private static final int VIEW_DISTANCE_X = 10;
+	private static final int VIEW_DISTANCE_Y = 8;
 	public static Camera getCamera(){
 		return camera;
 	}
