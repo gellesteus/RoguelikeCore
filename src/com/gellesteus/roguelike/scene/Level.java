@@ -5,26 +5,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 public class Level {
 	private static final int MAX_ROOM_SIZE=15,MIN_ROOM_SIZE=10;
 	private static final int ROOMS_TO_CREATE=20;
 	private static final int UP =0,DOWN=1,LEFT=2,RIGHT=3;
 
-	
+	private TileSet tileset;
 	private Node[][] graph;
 
-	
-	private static class NodeComp implements Comparator<Node>{
-
-		@Override
-		public int compare(Node o1, Node o2) {
-			return o1.getG()+o1.getH()-o2.getG()+o2.getH();
-		}
-		
-	}
-	
-	private static final NodeComp comp = new NodeComp();
-	
 	private void constructGraph(int width, int height){
 		graph=new Node[width][height];
 		for(int x=0;x<width;x++){
@@ -93,7 +84,6 @@ public class Level {
 		current.setParent(null);
 		current.setG(0);
 		current.calculateH(node2);
-		System.out.println("Connecting " + node1.getX()+" "+node1.getY()+" to " + node2.getX()+" "+node2.getY());
 		while(current != node2){
 			for(Node i:current.getNeighbours()){
 				if(i!=null){
@@ -133,6 +123,23 @@ public class Level {
 		while(current.getParent()!=null){
 			current.setType(CellType.FLOOR);
 			current=current.getParent();
+		}
+	}
+	
+	public void render(int xStart, int yStart,Sprite wall, Sprite floor, SpriteBatch batch){
+		
+		wall.setPosition(0, 0);
+		floor.setPosition(0, 0);
+		for(int y = yStart;y<this.graph[0].length;y++){
+			for(int x = xStart;x<this.graph.length;x++){
+				if(graph[x][y].getType()==CellType.WALL){
+					wall.setPosition(20*(x-xStart), 20*(y-yStart));
+					wall.draw(batch);
+				}else{
+					floor.setPosition(20*(x-xStart), 20*(y-yStart));
+					floor.draw(batch);
+				}
+			}
 		}
 	}
 	

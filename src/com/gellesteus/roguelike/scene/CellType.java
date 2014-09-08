@@ -9,9 +9,9 @@ package com.gellesteus.roguelike.scene;
  */
 public enum CellType {
 	FLOOR(1),
-	WALL(20),
-	WALL_EXIT(4),	//Primarily used for room templates to describe places that you would like the room to exit
-	WALL_HARD(50),	//Primarily used for room templates to describe places that you would not like the room to exit
+	WALL(5),
+	WALL_EXIT(3),	//Primarily used for room templates to describe places that you would like the room to exit
+	WALL_HARD(7),	//Primarily used for room templates to describe places that you would not like the room to exit
 	DOOR(1);
 	
 	private int cost;
