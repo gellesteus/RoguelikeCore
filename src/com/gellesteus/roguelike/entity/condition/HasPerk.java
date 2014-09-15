@@ -10,7 +10,7 @@ import com.gellesteus.roguelike.entity.Character;
  *
  */
 public class HasPerk extends Condition {
-
+	private int perk;
 	/* (non-Javadoc)
 	 * @see com.gellesteus.roguelike.entity.condition.Condition#evalue(com.gellesteus.roguelike.entity.Character)
 	 */

@@ -10,10 +10,14 @@ import com.gellesteus.roguelike.entity.Character;
  *
  */
 public class AttributeMax extends Condition {
-
-	/* (non-Javadoc)
-	 * @see com.gellesteus.roguelike.entity.condition.Condition#evalue(com.gellesteus.roguelike.entity.Character)
-	 */
+	private int attribute;
+	private int value;
+	
+	public AttributeMax(int attribute, int value){
+		this.value=value;
+		this.attribute=attribute;
+	}
+	
 	@Override
 	public boolean evaluate(Character character) {
 		// TODO Auto-generated method stub

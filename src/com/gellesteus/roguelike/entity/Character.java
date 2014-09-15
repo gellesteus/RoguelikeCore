@@ -12,6 +12,7 @@ import com.gellesteus.roguelike.entity.data.attribute.Attribute;
 import com.gellesteus.roguelike.entity.data.perk.Perk;
 import com.gellesteus.roguelike.entity.data.race.Race;
 import com.gellesteus.roguelike.entity.data.resource.Resource;
+import com.gellesteus.roguelike.entity.data.tag.Tag;
 import com.gellesteus.roguelike.entity.data.characterclass.Class;
 import com.gellesteus.roguelike.entity.data.effect.Effect;
 import com.gellesteus.roguelike.entity.data.effect.EffectFactory;
@@ -34,6 +35,7 @@ public class Character implements Update {
 	private HashMap<Item,Integer> inventory = new HashMap<Item,Integer>();
 	private WeaponBase equippedWeapon;
 	private EnumMap<Slot,ArmorBase> equippedArmor = new EnumMap<Slot,ArmorBase>(Slot.class);
+	private EnumMap<Tag,Boolean> actions = new EnumMap<Tag,Boolean>(Tag.class);
 	private Resource health = new Resource(Resource.HEALTH,10);
 	private int level;
 	private Class cClass;
@@ -41,6 +43,19 @@ public class Character implements Update {
 	private int maxGcd;
 	
 	private int x,y;
+	
+	
+	public void disallowAction(Tag tag){
+		actions.put(tag, false);
+	}
+	
+	public void allowAction(Tag tag){
+		actions.put(tag,true);
+	}
+	
+	public boolean isActionAllowed(Tag tag){
+		return actions.get(tag);
+	}
 	
 	public boolean hasPerk(Perk perk){
 		return perks.contains(perk);
@@ -53,6 +68,15 @@ public class Character implements Update {
 	
 	public boolean hasAbility(Ability ability){
 		return abilities.contains(ability);
+	}
+	
+	public boolean hasAbility(int ability){
+		for(Ability i:abilities){
+			if(i.getID()==ability){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void addItem(Item item, int amount){

@@ -1,0 +1,87 @@
+package com.gellesteus.roguelike.entity.data;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+
+import com.gellesteus.roguelike.entity.condition.*;
+import com.gellesteus.roguelike.entity.data.ability.*;
+import com.gellesteus.roguelike.entity.data.attribute.Attribute;
+import com.gellesteus.roguelike.entity.data.effect.*;
+import com.gellesteus.roguelike.entity.data.item.Item;
+import com.gellesteus.roguelike.entity.data.item.armor.*;
+import com.gellesteus.roguelike.entity.data.item.consumable.Consumable;
+import com.gellesteus.roguelike.entity.data.item.weapon.*;
+import com.gellesteus.roguelike.entity.data.perk.Perk;
+import com.gellesteus.roguelike.entity.data.race.Race;
+import com.gellesteus.roguelike.entity.data.resource.Resource;
+import com.gellesteus.roguelike.entity.data.characterclass.Class;
+import com.gellesteus.roguelike.entity.ai.*;
+import com.gellesteus.roguelike.scene.Level;
+import com.gellesteus.roguelike.scene.Node;
+import com.thoughtworks.xstream.XStream;
+
+public class PersistenceManager {
+	private static XStream xstream;
+	static{
+		xstream=new XStream();
+		xstream.alias("Condition",Condition.class);
+		xstream.alias("AndCondition",AndCondition.class);
+		xstream.alias("AttributeMax", AttributeMax.class);
+		xstream.alias("AttributeMin", AttributeMin.class);
+		xstream.alias("GetStoryFlag", GetStoryFlag.class);
+		xstream.alias("HasAbility", HasAbility.class);
+		xstream.alias("HasPerk", HasPerk.class);
+		xstream.alias("IsClass", IsClass.class);
+		xstream.alias("IsRace", IsRace.class);
+		xstream.alias("LevelMax", LevelMax.class);
+		xstream.alias("LevelMin", LevelMin.class);
+		xstream.alias("NotCondition", NotCondition.class);
+		xstream.alias("OrCondition", OrCondition.class);
+		xstream.alias("ResourceMax", ResourceMax.class);
+		xstream.alias("ResourceMin", ResourceMin.class);
+		xstream.alias("XorCondition", XorCondition.class);
+		xstream.alias("Routine", Routine.class);
+		xstream.alias("AttributeMax", AttributeMax.class);
+		xstream.alias("Ability", Ability.class);
+		xstream.alias("Cast", Cast.class);
+		xstream.alias("DamageType", DamageType.class);
+		xstream.alias("Melee", Melee.class);
+		xstream.alias("Passive", Passive.class);
+		xstream.alias("Sustained", Sustained.class);
+		xstream.alias("Attribute", Attribute.class);
+		xstream.alias("Class", Class.class);
+		xstream.alias("Effect", Effect.class);
+		xstream.alias("Charge", Charge.class);
+		xstream.alias("DamageInstant", DamageInstant.class);
+		xstream.alias("DamageOverTime", DamageOverTime.class);
+		xstream.alias("EffectAtEnd", EffectAtEnd.class);
+		xstream.alias("FortifyResource", FortifyResource.class);
+		xstream.alias("IncreaseAttribute", IncreaseAttribute.class);
+		xstream.alias("LifeLeechInstant", LifeLeechInstant.class);
+		xstream.alias("LifeLeechOverTime", LifeLeechOverTime.class);
+		xstream.alias("Item", Item.class);
+		xstream.alias("ArmorBase", ArmorBase.class);
+		xstream.alias("AbilityEnchantment Armor", AbilityEnchantment.class);
+		xstream.alias("Armor", Armor.class);
+		xstream.alias("Armor Slot", Slot.class);
+		xstream.alias("Consumable", Consumable.class);
+		xstream.alias("AddAbilityEnchantment Weapon", AddAbilityEnchantment.class);
+		xstream.alias("ApplyEffectEnchantment Weapon", ApplyEffectEnchantment.class);
+		xstream.alias("BonusDamageEnchantment", BonusDamageEnchantment.class);
+		xstream.alias("ChanceEnchantment", ChanceEnchantment.class);
+		xstream.alias("EffectEnchantment", EffectEnchantment.class);
+		xstream.alias("ElementalDamageEnchantment", ElementalDamageEnchantment.class);
+		xstream.alias("HealthOnHitEnchantment", HealthOnHitEnchantment.class);
+		xstream.alias("LifeLeechEnchantment", LifeLeechEnchantment.class);
+		xstream.alias("ResourceBurnEnchantment", ResourceBurnEnchantment.class);
+		xstream.alias("RestoreResourceEnchantment", RestoreResourceEnchantment.class);
+		xstream.alias("Weapon", Weapon.class);
+		xstream.alias("WeaponBase", WeaponBase.class);
+		xstream.alias("Race", Race.class);
+		xstream.alias("Resourece", Resource.class);
+		xstream.alias("Level", Level.class);
+		xstream.alias("Node", Node.class);
+		xstream.alias("Perk", Perk.class);
+	}
+}

@@ -1,25 +1,32 @@
 package com.gellesteus.roguelike.entity.data.ability;
 
+import java.util.ArrayList;
+
 import com.gellesteus.roguelike.entity.Update;
 import com.gellesteus.roguelike.entity.condition.Condition;
 import com.gellesteus.roguelike.entity.Character;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.gellesteus.roguelike.entity.data.tag.Tag;
 
 public abstract class Ability implements Update,Cloneable {
 	protected String name;
 	protected Condition castCondition;
 	protected float cooldownMax;
-	protected float cooldownCurrent;
+	private int ID;
+	protected ArrayList<Tag> tags = new ArrayList<Tag>();
+	
+	@XStreamOmitField
 	protected Character owner;
+	@XStreamOmitField
+	protected float cooldownCurrent;
 	
 	public Ability(Ability ability, Character character){
 		this.owner=character;
 		this.castCondition=ability.castCondition;
 		this.cooldownMax=ability.cooldownMax;
+		this.tags=ability.tags;
 	}
-	
-	/**
-	 * 
-	 */
+
 	public Ability() {
 		// Null constructor
 	}
@@ -54,5 +61,9 @@ public abstract class Ability implements Update,Cloneable {
 			}
 		}
 		return false;
+	}
+
+	public int getID() {
+		return ID;
 	}
 }

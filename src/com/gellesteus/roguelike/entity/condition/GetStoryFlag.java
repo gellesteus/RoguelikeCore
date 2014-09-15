@@ -10,7 +10,7 @@ import com.gellesteus.roguelike.entity.Character;
  *
  */
 public class GetStoryFlag extends Condition {
-
+	private String flag;
 	/* (non-Javadoc)
 	 * @see com.gellesteus.roguelike.entity.condition.Condition#evalue(com.gellesteus.roguelike.entity.Character)
 	 */

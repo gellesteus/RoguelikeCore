@@ -10,7 +10,8 @@ import com.gellesteus.roguelike.entity.Character;
  *
  */
 public class ResourceMax extends Condition {
-
+	private int resource;
+	private int amount;
 	/* (non-Javadoc)
 	 * @see com.gellesteus.roguelike.entity.condition.Condition#evalue(com.gellesteus.roguelike.entity.Character)
 	 */

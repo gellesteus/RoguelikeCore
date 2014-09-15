@@ -12,7 +12,6 @@ public class Passive extends Ability {
 	 */
 	public Passive(Ability ability, Character character) {
 		super(ability, character);
-		// TODO Auto-generated constructor stub
 	}
 
 	public enum Trigger{
