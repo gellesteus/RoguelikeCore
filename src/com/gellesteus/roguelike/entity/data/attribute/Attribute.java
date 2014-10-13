@@ -2,9 +2,10 @@ package com.gellesteus.roguelike.entity.data.attribute;
 
 import java.util.HashMap;
 
+import com.gellesteus.roguelike.entity.Reference;
 import com.gellesteus.roguelike.entity.Update;
 
-public class Attribute implements Update{
+public class Attribute extends Reference implements Update{
 	public static final Attribute STRENGTH = new Attribute("Strength",1);
 	public static final Attribute DEXTERITY = new Attribute("Dexterity",2);
 	public static final Attribute CONSTITUTION = new Attribute("Constitution",3);
@@ -32,6 +33,30 @@ public class Attribute implements Update{
 	public static final Attribute CRIT_MULT = new Attribute("Critical Damage",34);
 	
 	public static final Attribute AI_CAUTION = new Attribute("AI Caution Amount",40);
+	
+	public static final Attribute HEALTH_REGEN = new Attribute("Health Regeneration per Second",40);
+	public static final Attribute MANA_REGEN = new Attribute("Mana Regeneration per Second",41);
+	public static final Attribute STAMINA_REGEN = new Attribute("Stamina Regeneration per Second",42);
+	public static final Attribute ADRENALINE_REGEN = new Attribute("Adrenaline lost per Second",43);
+	public static final Attribute RUNE_REGEN = new Attribute("Rune Regeneration per Second",44);
+	
+	public static final Attribute COOLDOWN_REDUCTION = new Attribute("Cooldown Reduction",50);
+	public static final Attribute HASTE = new Attribute("Reduced Movement Cooldown",51);
+	public static final Attribute LIFE_STEAL = new Attribute("Life Steal",52);
+	public static final Attribute INCREASED_XP = new Attribute("Increased XP gain",53);
+	public static final Attribute INCREASED_BUFF_DURATION = new Attribute("Increased Buff Duration",54);
+
+	public static final Attribute INCREASED_PHYSICAL_DAMAGE = new Attribute("Increased Physical Damage",60);
+	public static final Attribute INCREASED_MAGIC_DAMAGE = new Attribute("Increased Magic Damage",61);
+	public static final Attribute INCREASED_FIRE_DAMAGE = new Attribute("Increased Fire Damage",62);
+	public static final Attribute INCREASED_AIR_DAMAGE = new Attribute("Increased Air Damage",63);
+	public static final Attribute INCREASED_EARTH_DAMAGE = new Attribute("Increased Earth Damage",64);
+	public static final Attribute INCREASED_WATER_DAMAGE = new Attribute("Increased Water Damage",65);
+	public static final Attribute INCREASED_POISON_DAMAGE = new Attribute("Increased Poison Damage",66);
+	public static final Attribute INCREASED_PSIONIC_DAMAGE = new Attribute("Increased Psionic Damage",67);
+	public static final Attribute INCREASED_SHOCK_DAMAGE = new Attribute("Increased Shock Damage",68);
+	public static final Attribute INCREASED_POSITIVE_DAMAGE = new Attribute("Increased Positive Energy Damage",69);
+	public static final Attribute INCREASED_NEGATIVE_DAMAGE = new Attribute("Increased Negative Energy Damage",70);
 	
 	static{
 		ARMOR.derivedFrom.put(3, 0.5f);
@@ -101,5 +126,9 @@ public class Attribute implements Update{
 				return this.ID == ((Attribute)obj).ID;
 			}
 		}
+	}
+
+	public int getCurrentValue() {
+		return value;
 	}
 }

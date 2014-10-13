@@ -14,9 +14,9 @@ public class EffectEnchantment extends WeaponBase {
 	}
 
 	@Override
-	public void attack(Character attacker, Character attacked) {
+	public void attack(Character attacker, Character attacked,float amount) {
 		EffectFactory.CreateEffect(effect, attacked, attacker);
-		weapon.attack(attacker, attacked);
+		weapon.attack(attacker, attacked,amount);
 	}
 
 	@Override
@@ -29,4 +29,13 @@ public class EffectEnchantment extends WeaponBase {
 		weapon.unequip(equipper);
 	}
 
+	@Override
+	public boolean hasGemSlot() {
+		return weapon.hasGemSlot();
+	}
+	
+	@Override
+	public void update(int msPassed, Character equipped) {
+		weapon.update(msPassed, equipped);
+	}
 }

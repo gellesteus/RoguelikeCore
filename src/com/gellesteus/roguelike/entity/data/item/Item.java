@@ -1,6 +1,8 @@
 package com.gellesteus.roguelike.entity.data.item;
 
-public abstract class Item {
+import com.gellesteus.roguelike.entity.Reference;
+
+public abstract class Item extends Reference{
 	int value;
 	String name;
 	String description;

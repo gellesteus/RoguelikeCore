@@ -18,8 +18,8 @@ public class Weapon extends WeaponBase{
 	 * @see com.gellesteus.roguelike.entity.data.item.WeaponBase#attack(com.gellesteus.roguelike.entity.Character, com.gellesteus.roguelike.entity.Character)
 	 */
 	@Override
-	public void attack(Character attacker, Character attacked) {
-		attacked.damage(damage, DamageType.PHYSICAL);
+	public void attack(Character attacker, Character attacked,float amount) {
+		attacked.damage((int)(damage*amount), DamageType.PHYSICAL);
 	}
 
 	/* (non-Javadoc)
@@ -38,6 +38,16 @@ public class Weapon extends WeaponBase{
 	public void unequip(Character equipper) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public boolean hasGemSlot() {
+		return false;
+	}
+	
+	@Override
+	public void update(int msPassed, Character equipped) {
+		//Null method
 	}
 
 }

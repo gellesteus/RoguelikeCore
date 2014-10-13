@@ -14,9 +14,9 @@ public class HealthOnHitEnchantment extends WeaponBase{
 	private int amount;
 	
 	@Override
-	public void attack(Character attacker, Character attacked) {
-		attacker.heal(amount);
-		weapon.attack(attacker, attacked);
+	public void attack(Character attacker, Character attacked,float amount) {
+		attacker.heal((int)(this.amount*amount));
+		weapon.attack(attacker, attacked,amount);
 	}
 
 	@Override
@@ -29,4 +29,13 @@ public class HealthOnHitEnchantment extends WeaponBase{
 		weapon.equip(equipper);
 	}
 
+	@Override
+	public boolean hasGemSlot() {
+		return weapon.hasGemSlot();
+	}
+	
+	@Override
+	public void update(int msPassed, Character equipped) {
+		weapon.update(msPassed, equipped);
+	}
 }

@@ -2,6 +2,7 @@ package com.gellesteus.roguelike.entity.data.diety;
 
 import java.util.ArrayList;
 
+import com.gellesteus.roguelike.entity.Reference;
 import com.gellesteus.roguelike.entity.data.ability.Passive;
 
 /* control class for a diety. Defines all attributes about them.
@@ -9,7 +10,7 @@ import com.gellesteus.roguelike.entity.data.ability.Passive;
  * be added to the hero, hidden.
  * 
  */
-public class Diety {
+public class Diety extends Reference{
 	private String name;
 	private String description;
 	private Passive rankUp;

@@ -14,6 +14,7 @@ import com.gellesteus.roguelike.entity.data.race.Race;
 import com.gellesteus.roguelike.entity.data.resource.Resource;
 import com.gellesteus.roguelike.entity.data.tag.Tag;
 import com.gellesteus.roguelike.entity.data.characterclass.Class;
+import com.gellesteus.roguelike.entity.data.diety.Diety;
 import com.gellesteus.roguelike.entity.data.effect.Effect;
 import com.gellesteus.roguelike.entity.data.effect.EffectFactory;
 import com.gellesteus.roguelike.entity.data.item.Item;
@@ -21,7 +22,7 @@ import com.gellesteus.roguelike.entity.data.item.weapon.WeaponBase;
 import com.gellesteus.roguelike.entity.data.item.armor.ArmorBase;
 import com.gellesteus.roguelike.entity.data.item.armor.Slot;
 import com.gellesteus.roguelike.entity.data.item.consumable.Consumable;
-public class Character implements Update {
+public class Character extends Reference implements Update {
 	private static final int RESIST_HALF_POINT = 100;
 	
 	private String name;
@@ -42,8 +43,30 @@ public class Character implements Update {
 	private int gcd;
 	private int maxGcd;
 	
+	
+	
 	private int x,y;
 	
+	
+	public int getDevotionTo(Diety diety){
+		return 0;
+		//TODO Write this
+	}
+	
+	public int getNumTaggedPerks(Tag tag){
+		int count=0;
+		for(Perk i:perks){
+			if(i.isTag(tag)){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	public boolean isVampire(){
+		//Vampirism is a hard-coded ability
+		return false;
+	}
 	
 	public void disallowAction(Tag tag){
 		actions.put(tag, false);
@@ -64,6 +87,10 @@ public class Character implements Update {
 	public void addPerk(Perk perk){
 		perks.add(perk);
 		addAbility(perk.getEffect());
+	}
+	
+	public boolean isBelowHalfHP(){
+		return health.getCurrent()<=(health.getMax()*0.5);
 	}
 	
 	public boolean hasAbility(Ability ability){
@@ -159,6 +186,29 @@ public class Character implements Update {
 		return false;
 	}
 	
+	
+	public void modResource(int resource, int amount,boolean max){
+		for(Resource i:resources){
+			if(i.getID()==resource){
+				if(max){
+					i.modMax(amount);
+					return;
+				}
+				i.modCurrent(amount);
+				return;
+			}
+		}
+	}
+	
+	public void modAV(int attribute, int amount){
+		for(Attribute i:attributes){
+			if(i.getID()==attribute){
+				i.modAttribute(amount);
+				return;
+			}
+		}
+	}
+	
 	public void modAV(Attribute attribute,int amount){
 		if(attributes.contains(attribute)){
 			attributes.get(attributes.indexOf(attribute)).modAttribute(amount);
@@ -233,6 +283,20 @@ public class Character implements Update {
 	}
 	
 	public int getAttribute(Attribute attribute){
+		return 0;
+	}
+	
+	public int getAV(int attribute){
+		for(Attribute i :attributes){
+			if(i.getID()==attribute){
+				return i.getCurrentValue();
+			}
+		}
+		for(Resource i :resources){
+			if(i.getID()==attribute){
+				return i.getCurrent();
+			}
+		}
 		return 0;
 	}
 	

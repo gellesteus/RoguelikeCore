@@ -33,6 +33,10 @@ public class Cast extends Ability {
 	public void cast(int x, int y) {
 		this.cooldownCurrent=cooldownMax;
 	}
+	
+	public void cast(Character character){
+		
+	}
 
 	/* (non-Javadoc)
 	 * @see com.gellesteus.roguelike.entity.data.ability.Ability#clone()

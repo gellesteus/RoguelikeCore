@@ -3,13 +3,16 @@ package com.gellesteus.roguelike.entity.data.effect;
 import com.gellesteus.roguelike.entity.data.ability.DamageType;
 import com.gellesteus.roguelike.entity.data.effect.scaling.NumericValue;
 
-public class DamageInstant extends Effect {
+public class ResourceBurn extends Effect {
+
 	private NumericValue damage;
+	private int resBurnId;
 	private DamageType[] damagetypes;
 	
-	public DamageInstant(NumericValue damage,DamageType...damageTypes){
+	public ResourceBurn(NumericValue damage,int resBurnId,DamageType...damageTypes){
 		super(0);
 		this.damage=damage;
+		this.resBurnId=resBurnId;
 		this.damagetypes=damageTypes;
 	}
 	
@@ -20,7 +23,9 @@ public class DamageInstant extends Effect {
 
 	@Override
 	public void onApply() {
-		affects.damage(damage.getValue(applier), damagetypes);
+		int damageDealt = (affects.getAV(resBurnId)>damage.getValue(applier)) ? damage.getValue(applier) : affects.getAV(resBurnId);
+		affects.damage(damageDealt, damagetypes);
+		affects.modResource(resBurnId, -damageDealt, false);
 		affects.removeEffect(this);
 	}
 	@Override
@@ -28,7 +33,7 @@ public class DamageInstant extends Effect {
 
 	@Override
 	public Object clone() {
-		return new DamageInstant(this.damage,this.damagetypes);
+		return new ResourceBurn(this.damage,this.resBurnId,this.damagetypes);
 	}
 
 }

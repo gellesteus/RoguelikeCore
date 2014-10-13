@@ -16,9 +16,9 @@ public class ResourceBurnEnchantment extends WeaponBase{
 	private Resource resource;
 	
 	@Override
-	public void attack(Character attacker, Character attacked) {
-		attacked.modAV(resource, -amount);
-		weapon.attack(attacker, attacked);
+	public void attack(Character attacker, Character attacked,float amount) {
+		attacked.modAV(resource, (int)(-this.amount*amount));
+		weapon.attack(attacker, attacked,amount);
 	}
 
 	@Override
@@ -31,4 +31,13 @@ public class ResourceBurnEnchantment extends WeaponBase{
 		weapon.unequip(equipper);
 	}
 
+	@Override
+	public boolean hasGemSlot() {
+		return weapon.hasGemSlot();
+	}
+	
+	@Override
+	public void update(int msPassed, Character equipped) {
+		weapon.update(msPassed, equipped);
+	}
 }

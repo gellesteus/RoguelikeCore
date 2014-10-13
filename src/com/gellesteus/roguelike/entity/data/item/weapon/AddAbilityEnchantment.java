@@ -15,8 +15,8 @@ public class AddAbilityEnchantment extends WeaponBase {
 	private WeaponBase weapon;
 	
 	@Override
-	public void attack(Character attacker, Character attacked) {
-		weapon.attack(attacker, attacked);
+	public void attack(Character attacker, Character attacked,float amount) {
+		weapon.attack(attacker, attacked,amount);
 	}
 
 	@Override
@@ -29,5 +29,15 @@ public class AddAbilityEnchantment extends WeaponBase {
 	public void unequip(Character equipper) {
 		equipper.removeAbility(ab);
 		weapon.equip(equipper);
+	}
+
+	@Override
+	public boolean hasGemSlot() {
+		return weapon.hasGemSlot();
+	}
+
+	@Override
+	public void update(int msPassed, Character equipped) {
+		weapon.update(msPassed, equipped);
 	}
 }

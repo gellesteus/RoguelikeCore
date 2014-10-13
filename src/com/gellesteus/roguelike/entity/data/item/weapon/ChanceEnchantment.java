@@ -19,11 +19,11 @@ public class ChanceEnchantment extends WeaponBase{
 	private Random random = new Random();
 	
 	@Override
-	public void attack(Character attacker, Character attacked) {
+	public void attack(Character attacker, Character attacked,float amount) {
 		if(random.nextFloat()<=chance){
-			enchantment.attack(attacker, attacked);
+			enchantment.attack(attacker, attacked,amount);
 		}else{
-			weapon.attack(attacker, attacked);
+			weapon.attack(attacker, attacked,amount);
 		}
 	}
 
@@ -36,5 +36,14 @@ public class ChanceEnchantment extends WeaponBase{
 	public void unequip(Character equipper) {
 		enchantment.unequip(equipper);
 	}
+	
+	@Override
+	public boolean hasGemSlot() {
+		return weapon.hasGemSlot();
+	}
 
+	@Override
+	public void update(int msPassed, Character equipped) {
+		weapon.update(msPassed, equipped);
+	}
 }

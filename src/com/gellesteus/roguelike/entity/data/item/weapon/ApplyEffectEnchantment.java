@@ -15,9 +15,9 @@ public class ApplyEffectEnchantment extends WeaponBase {
 	private Weapon weapon;
 	
 	@Override
-	public void attack(Character attacker, Character attacked) {
+	public void attack(Character attacker, Character attacked,float amount) {
 		attacked.applyEffect(effect);
-		weapon.attack(attacker, attacked);
+		weapon.attack(attacker, attacked,amount);
 	}
 
 	@Override
@@ -30,4 +30,13 @@ public class ApplyEffectEnchantment extends WeaponBase {
 		weapon.unequip(equipper);
 	}
 
+	@Override
+	public boolean hasGemSlot() {
+		return weapon.hasGemSlot();
+	}
+	
+	@Override
+	public void update(int msPassed, Character equipped) {
+		weapon.update(msPassed, equipped);
+	}
 }

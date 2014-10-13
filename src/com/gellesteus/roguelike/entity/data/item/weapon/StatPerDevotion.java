@@ -1,40 +1,41 @@
-/**
- * 
- */
 package com.gellesteus.roguelike.entity.data.item.weapon;
 
 import com.gellesteus.roguelike.entity.Character;
-import com.gellesteus.roguelike.entity.data.ability.DamageType;
 
-/**
- * @author mark
- *
- */
-public class ElementalDamageEnchantment extends WeaponBase {
-	private int damage;
-	private DamageType dType;
+public class StatPerDevotion extends WeaponBase {
+	private int diety;
+	private float mult;
 	private WeaponBase weapon;
+	private int current;
+	private int stat;
+	
 	@Override
 	public void attack(Character attacker, Character attacked,float amount) {
-		attacked.damage((int)(damage*amount), dType);
-		weapon.attack(attacker, attacked,amount);
+		weapon.attack(attacker, attacked, amount);
 	}
+
 	@Override
 	public void equip(Character equipper) {
-		weapon.equip(equipper);		
+		// TODO Auto-generated method stub
+
 	}
+
 	@Override
 	public void unequip(Character equipper) {
-		weapon.equip(equipper);
+		// TODO Auto-generated method stub
+
 	}
-	
+
 	@Override
 	public boolean hasGemSlot() {
-		return weapon.hasGemSlot();
+		// TODO Auto-generated method stub
+		return false;
 	}
-	
+
 	@Override
 	public void update(int msPassed, Character equipped) {
-		weapon.update(msPassed, equipped);
+		// TODO Auto-generated method stub
+
 	}
+
 }

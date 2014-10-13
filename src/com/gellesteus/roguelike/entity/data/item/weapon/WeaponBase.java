@@ -10,8 +10,9 @@ import com.gellesteus.roguelike.entity.data.item.Item;
  *
  */
 public abstract class WeaponBase extends Item{
-	public abstract void attack(Character attacker, Character attacked);
+	public abstract void attack(Character attacker, Character attacked, float amount);
 	public abstract void equip(Character equipper);
 	public abstract void unequip(Character equipper);
-	
+	public abstract boolean hasGemSlot();
+	public abstract void update(int msPassed,Character equipped);
 }

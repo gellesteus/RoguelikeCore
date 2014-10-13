@@ -1,6 +1,8 @@
 package com.gellesteus.roguelike.entity.data.characterclass;
 
-public class Class {
+import com.gellesteus.roguelike.entity.Reference;
+
+public class Class extends Reference{
 	private String name;
 	private String decription;
 	private int ID;

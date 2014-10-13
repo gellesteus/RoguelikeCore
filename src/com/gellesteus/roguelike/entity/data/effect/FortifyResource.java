@@ -1,12 +1,14 @@
 package com.gellesteus.roguelike.entity.data.effect;
 
+import com.gellesteus.roguelike.entity.data.effect.scaling.NumericValue;
 import com.gellesteus.roguelike.entity.data.resource.Resource;
 
 public class FortifyResource extends Effect{
-	int amount;
-	Resource resource;
+	private NumericValue amount;
+	private Resource resource;
+	private int valAtCast=0;
 	
-	public FortifyResource(int duration,int amount, Resource resource) {
+	public FortifyResource(int duration,NumericValue amount, Resource resource) {
 		super(duration);
 		this.amount=amount;
 		this.resource=resource;
@@ -14,12 +16,13 @@ public class FortifyResource extends Effect{
 
 	@Override
 	public void onApply() {
-		affects.increaseMaxResource(resource, amount);
+		valAtCast=amount.getValue(applier);
+		affects.increaseMaxResource(resource,valAtCast);
 	}
 
 	@Override
 	public void onRemove() {
-		affects.increaseMaxResource(resource, -amount);
+		affects.increaseMaxResource(resource, -valAtCast);
 	}
 
 	@Override

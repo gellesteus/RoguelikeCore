@@ -1,12 +1,13 @@
 package com.gellesteus.roguelike.entity.data.effect;
 
 import com.gellesteus.roguelike.entity.data.ability.DamageType;
+import com.gellesteus.roguelike.entity.data.effect.scaling.NumericValue;
 
 public class DamageOverTime extends Effect {
-	private int dps;
+	private NumericValue dps;
 	private DamageType[] damagetypes;
 	
-	public DamageOverTime(int dps,int duration,DamageType...damageTypes){
+	public DamageOverTime(NumericValue dps,int duration,DamageType...damageTypes){
 		super(duration);
 		this.dps=dps;
 		this.damagetypes=damageTypes;
@@ -14,7 +15,7 @@ public class DamageOverTime extends Effect {
 	
 	@Override
 	public void update(int msPassed) {
-		affects.damage((dps*(msPassed/1000)), damagetypes);
+		affects.damage((dps.getValue(applier)*(msPassed/1000)), damagetypes);
 		super.update(msPassed);
 	}
 

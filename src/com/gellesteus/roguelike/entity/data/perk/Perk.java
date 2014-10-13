@@ -6,7 +6,8 @@ import com.gellesteus.roguelike.entity.condition.Condition;
 import com.gellesteus.roguelike.entity.data.ability.Passive;
 import com.gellesteus.roguelike.entity.data.tag.Tag;
 import com.gellesteus.roguelike.entity.Character;
-public class Perk {
+import com.gellesteus.roguelike.entity.Reference;
+public class Perk extends Reference{
 	private String name;
 	private String decription;
 	private Condition requirements;
@@ -23,6 +24,10 @@ public class Perk {
 		for(Tag i:tags){
 			this.tags.add(i);
 		}
+	}
+	
+	public boolean isTag(Tag tag){
+		return tags.contains(tag);
 	}
 	
 	public boolean isEligible(Character character){

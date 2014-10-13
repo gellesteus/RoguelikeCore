@@ -1,12 +1,14 @@
 package com.gellesteus.roguelike.entity.data.effect;
 
 import com.gellesteus.roguelike.entity.data.attribute.Attribute;
+import com.gellesteus.roguelike.entity.data.effect.scaling.NumericValue;
 
 public class IncreaseAttribute extends Effect {
-	private int amount;
+	private NumericValue amount;
 	private Attribute attribute;
+	private int valAtCast=0;
 	
-	public IncreaseAttribute(int duration,int amount, Attribute attribute) {
+	public IncreaseAttribute(int duration,NumericValue amount, Attribute attribute) {
 		super(duration);
 		this.amount=amount;
 		this.attribute=attribute;
@@ -14,12 +16,13 @@ public class IncreaseAttribute extends Effect {
 
 	@Override
 	public void onApply() {
-		affects.modAV(attribute, amount);
+		valAtCast=amount.getValue(applier);
+		affects.modAV(attribute, valAtCast);
 	}
 
 	@Override
 	public void onRemove() {
-		affects.modAV(attribute, -amount);
+		affects.modAV(attribute, -valAtCast);
 	}
 
 	@Override

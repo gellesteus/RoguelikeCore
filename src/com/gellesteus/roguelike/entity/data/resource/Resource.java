@@ -1,5 +1,6 @@
 package com.gellesteus.roguelike.entity.data.resource;
 
+import com.gellesteus.roguelike.entity.Reference;
 import com.gellesteus.roguelike.entity.Update;
 
 /*  Mark Kohler
@@ -7,14 +8,14 @@ import com.gellesteus.roguelike.entity.Update;
  * 	Class that contains all resources that can change over the course of the game.
  *  To use an instance of this class, you must prototype from an existing resource.
  */
-public class Resource implements Update{
+public class Resource extends Reference implements Update{
 	public static final Resource HEALTH = new Resource("Health",0,1,0);
 	public static final Resource MANA = new Resource("Mana",0,1,1);
 	public static final Resource STAMINA = new Resource("Stamina",0,5,2);
 	public static final Resource BLOOD = new Resource("Blood",0,0,3);
 	public static final Resource MIND_POINTS = new Resource("Mind Points",0,1,4);
 	public static final Resource DIVINE_ENERGY = new Resource("Divine Energy",-100,0,5);
-	public static final Resource COMBO_POINt = new Resource("Combo Position",0,0,6);
+	public static final Resource COMBO_POINT = new Resource("Combo Position",0,0,6);
 	public static final Resource SHIELD = new Resource("Shield",0,-5,7);
 	public static final Resource AIFEAR = new Resource("AI Fear State Controller",0,-1,8);
 	

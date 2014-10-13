@@ -2,13 +2,14 @@ package com.gellesteus.roguelike.entity.data.ability;
 
 import java.util.ArrayList;
 
+import com.gellesteus.roguelike.entity.Reference;
 import com.gellesteus.roguelike.entity.Update;
 import com.gellesteus.roguelike.entity.condition.Condition;
 import com.gellesteus.roguelike.entity.Character;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import com.gellesteus.roguelike.entity.data.tag.Tag;
 
-public abstract class Ability implements Update,Cloneable {
+public abstract class Ability extends Reference implements Update,Cloneable {
 	protected String name;
 	protected Condition castCondition;
 	protected float cooldownMax;
