@@ -4,7 +4,6 @@
 package com.gellesteus.roguelike.entity.condition;
 
 import com.gellesteus.roguelike.entity.Character;
-import com.gellesteus.roguelike.entity.data.attribute.Attribute;
 
 /**
  * @author mark
@@ -24,8 +23,7 @@ public class AttributeMin extends Condition {
 	 */
 	@Override
 	public boolean evaluate(Character character) {
-		// TODO Auto-generated method stub
-		return false;
+		return character.getAV(attribute)>value;
 	}
 
 }

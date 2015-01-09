@@ -28,22 +28,25 @@ public class Character extends Reference implements Update {
 	private String name;
 	private Race race;
 	private boolean isMale;
+	
 	private ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	private ArrayList<Resource> resources = new ArrayList<Resource>();
 	private ArrayList<Perk> perks = new ArrayList<Perk>();
 	private ArrayList<Effect> effects = new ArrayList<Effect>();
 	private HashMap<Item,Integer> inventory = new HashMap<Item,Integer>();
+	
 	private WeaponBase equippedWeapon;
 	private EnumMap<Slot,ArmorBase> equippedArmor = new EnumMap<Slot,ArmorBase>(Slot.class);
+	
 	private EnumMap<Tag,Boolean> actions = new EnumMap<Tag,Boolean>(Tag.class);
+	
 	private Resource health = new Resource(Resource.HEALTH,10);
 	private int level;
 	private Class cClass;
+	
 	private int gcd;
 	private int maxGcd;
-	
-	
 	
 	private int x,y;
 	
@@ -282,6 +285,10 @@ public class Character extends Reference implements Update {
 		return amount;
 	}
 	
+	public int heal(int amount, Character healer) {
+		return amount;
+	}
+	
 	public int getAttribute(Attribute attribute){
 		return 0;
 	}
@@ -380,5 +387,7 @@ public class Character extends Reference implements Update {
 		}
 		health.update(msPassed);
 	}
+
+
 
 }

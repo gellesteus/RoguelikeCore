@@ -1,0 +1,25 @@
+<?xml version ="1.0" encoding-"utf-8" standalone="yes"?>
+<list>
+	<Ability class="Sustained">
+		<name>Power Attack</name>
+		<description>Increases attack and spell power by 20. Reduces armor by 10.</description>
+		<castCondition type="ResourceMin">
+			<resource>0</resource>
+			<amount>0</amount>
+		</castCondition>
+		<cooldownMax>5</cooldownMax>
+		<ID>1</ID>
+		<ability>2</ability>
+	</Ability>
+
+	<Ability class="Passive">
+		<name>Power Attack</name>
+		<description>Increases attack and spell power by 20. Reduces armor by 10.</description>
+		<castCondition type="ResourceMin">
+			<resource>0</resource>
+			<amount>0</amount>
+		</castCondition>
+		<cooldownMax>0</cooldownMax>
+		<ability>2</ability>
+	</Ability>
+</list>

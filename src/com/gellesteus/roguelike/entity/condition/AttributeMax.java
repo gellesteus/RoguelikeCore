@@ -20,8 +20,7 @@ public class AttributeMax extends Condition {
 	
 	@Override
 	public boolean evaluate(Character character) {
-		// TODO Auto-generated method stub
-		return false;
+		return character.getAV(attribute)<value;
 	}
 
 }

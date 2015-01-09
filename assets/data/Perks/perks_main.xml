@@ -1,0 +1,29 @@
+<?xml version ="1.0" encoding-"utf-8" standalone="yes"?>
+<list>
+	<Perk>
+		<name>Power Attack</name>
+		<description>Grants the power attack ability, which reduces armor in exchange for increased attack and spell power</description>
+		<requirements class="OrCondition">
+			<condition1 class="AttributeMin">
+				<attribute>30</attribute>
+				<value>30</attribute>
+			</condition1>
+			<condition2 class="AttributeMin">
+				<attribute>31</attribute>
+				<value>30</attribute>
+			</condition2>
+		</requirements>
+		<effect>
+			<list>
+				<EventHandler>
+					<trigger>ON_APPLY</trigger>
+					<effect class="AddAbility">
+						<ability>1</ability>
+						<hasAbility>false</hasAbility>	
+					</effect>
+				</EventHandler>
+			</list>
+		</effect>
+	</Perk>
+
+</list>
